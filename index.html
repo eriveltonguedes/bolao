@@ -1394,6 +1394,7 @@
                 last.style.display = "none";
             }
         });
+<<<<<<< HEAD
         var overlaysTree = [
             {label: '<img src="legend/ruas_10.png" /> ruas' + layerZoomLink('layer_ruas_10'), layer: layer_ruas_10},
             {label: '<img src="legend/liberia_osm_railways_9.png" /> liberia_osm_railways' + layerZoomLink('layer_liberia_osm_railways_9'), layer: layer_liberia_osm_railways_9},
@@ -1406,6 +1407,50 @@
             {label: '<img src="legend/liberia_diamond_2.png" /> liberia_diamond' + layerZoomLink('layer_liberia_diamond_2'), layer: layer_liberia_diamond_2},
             {label: 'geoBoundaries2' + layerZoomLink('layer_geoBoundaries2_1') + '<br /><table><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_1143730.png" /></td><td>11 - 4373</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_437392391.png" /></td><td>4373 - 9239</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_9239139002.png" /></td><td>9239 - 13900</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_13900202403.png" /></td><td>13900 - 20240</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_20240274604.png" /></td><td>20240 - 27460</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_27460337585.png" /></td><td>27460 - 33758</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_33758436196.png" /></td><td>33758 - 43619</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_43619791297.png" /></td><td>43619 - 79129</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_791299989588.png" /></td><td>79129 - 998958</td></tr></table>', layer: layer_geoBoundaries2_1},
             {label: "OpenStreetMap", layer: layer_OpenStreetMap_0, radioGroup: 'bm' },]
+=======
+        bounds_group.addLayer(layer_liberia_8);
+        map.addLayer(layer_liberia_8);
+        var scaleDependentLayers = {
+            layer_geoBoundaries2_1: { layer: layer_geoBoundaries2_1, minZoom: 1, maxZoom: 28 },
+            layer_liberia_diamond_2: { layer: layer_liberia_diamond_2, minZoom: 8, maxZoom: 28 },
+            layer_building_3: { layer: layer_building_3, minZoom: 13, maxZoom: 28 },
+            layer_liberia_osm_railways_4: { layer: layer_liberia_osm_railways_4, minZoom: 10, maxZoom: 28 },
+            layer_liberia_focus_5: { layer: layer_liberia_focus_5, minZoom: 6, maxZoom: 28 },
+            layer_ruas_6: { layer: layer_ruas_6, minZoom: 11, maxZoom: 28 },
+            layer_Pop_places_2007_7: { layer: layer_Pop_places_2007_7, minZoom: 7, maxZoom: 28 },
+            layer_liberia_8: { layer: layer_liberia_8, minZoom: 5, maxZoom: 28 }
+        };
+        function zoomToLayer(layerName) {
+            var target = scaleDependentLayers[layerName];
+            if (!target || !target.layer || typeof target.layer.getBounds !== 'function') {
+                return;
+            }
+            map.fitBounds(target.layer.getBounds(), { padding: [24, 24] });
+        }
+        function syncScaleDependentLayers() {
+            var zoom = map.getZoom();
+            Object.keys(scaleDependentLayers).forEach(function(layerName) {
+                var target = scaleDependentLayers[layerName];
+                var shouldShow = zoom >= target.minZoom && zoom <= target.maxZoom;
+                var isShowing = map.hasLayer(target.layer);
+                if (shouldShow && !isShowing) {
+                    map.addLayer(target.layer);
+                } else if (!shouldShow && isShowing) {
+                    map.removeLayer(target.layer);
+                }
+            });
+        }
+        var overlaysTree = [
+            {label: 'liberia<br /><table><tr><td style="text-align: center;"><img src="legend/liberia_8_01100.png" /></td><td>0 - 110</td></tr><tr><td style="text-align: center;"><img src="legend/liberia_8_1104901.png" /></td><td>110 - 490</td></tr><tr><td style="text-align: center;"><img src="legend/liberia_8_49016002.png" /></td><td>490 - 1600</td></tr><tr><td style="text-align: center;"><img src="legend/liberia_8_160027203.png" /></td><td>1600 - 2720</td></tr><tr><td style="text-align: center;"><img src="legend/liberia_8_272030004.png" /></td><td>2720 - 3000</td></tr></table>', layer: layer_liberia_8},
+            {label: 'Pop_places_2007 <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_Pop_places_2007_7\'); return false;">zoom</a><br /><table><tr><td style="text-align: center;"><img src="legend/Pop_places_2007_7_02170.png" /></td><td>0 - 217</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_places_2007_7_2176481.png" /></td><td>217 - 648</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_places_2007_7_64828662.png" /></td><td>648 - 2866</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_places_2007_7_2866155693.png" /></td><td>2866 - 15569</td></tr><tr><td style="text-align: center;"><img src="legend/Pop_places_2007_7_155699708424.png" /></td><td>15569 - 970842</td></tr></table>', layer: layer_Pop_places_2007_7},
+            {label: '<img src="legend/ruas_6.png" /> ruas <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_ruas_6\'); return false;">zoom</a>', layer: layer_ruas_6},
+            {label: '<img src="legend/liberia_focus_5.png" /> liberia_focus <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_liberia_focus_5\'); return false;">zoom</a>', layer: layer_liberia_focus_5},
+            {label: '<img src="legend/liberia_osm_railways_4.png" /> liberia_osm_railways <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_liberia_osm_railways_4\'); return false;">zoom</a>', layer: layer_liberia_osm_railways_4},
+            {label: '<img src="legend/building_3.png" /> building <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_building_3\'); return false;">zoom</a>', layer: layer_building_3},
+            {label: '<img src="legend/liberia_diamond_2.png" /> liberia_diamond <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_liberia_diamond_2\'); return false;">zoom</a>', layer: layer_liberia_diamond_2},
+            {label: 'geoBoundaries2 <a class="layer-zoom-link" href="#" onclick="zoomToLayer(\'layer_geoBoundaries2_1\'); return false;">zoom</a><br /><table><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_1143730.png" /></td><td>11 - 4373</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_437392391.png" /></td><td>4373 - 9239</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_9239139002.png" /></td><td>9239 - 13900</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_13900202403.png" /></td><td>13900 - 20240</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_20240274604.png" /></td><td>20240 - 27460</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_27460337585.png" /></td><td>27460 - 33758</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_33758436196.png" /></td><td>33758 - 43619</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_43619791297.png" /></td><td>43619 - 79129</td></tr><tr><td style="text-align: center;"><img src="legend/geoBoundaries2_1_791299989588.png" /></td><td>79129 - 998958</td></tr></table>', layer: layer_geoBoundaries2_1},
+            {label: "OpenStreetMap", layer: layer_OpenStreetMap_0},]
+>>>>>>> dee0cb6bb485c3682179968251402c3f31fc7f6f
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
